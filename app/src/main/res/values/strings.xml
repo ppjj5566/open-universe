@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Prototype</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="hint_name">Full name</string>
+    <string name="btn_login">LOGIN</string>
+    <string name="btn_register">REGISTER</string>
+    <string name="btn_link_to_register">Not a member? Sign up now.</string>
+    <string name="btn_link_to_login">Already registred! Login Me.</string>
+    <string name="welcome">Welcome</string>
+    <string name="btn_logout">LOGOUT</string>
+    <string name="name">Full name</string>
+    <string name="search">Search</string>
+    <string name="tools">Tools</string>
+    <string name="information">Information</string>
+    <string name="menu">menu</string>
+    <string name="inform">information</string>
+    <string name="friend">upload</string>
+    <string name="show_my_story">show_my_story</string>
+    <string name="done">Done</string>
+    <string name="location_x">location_x</string>
+    <string name="location_y">location_y</string>
+    <string name="make">make</string>
+    <string name="edit_image">edit_image</string>
+    <string name="button">button</string>
+    <string name="title_image">title image</string>
+    <string name="image">image</string>
+    <string name="log_out">Log out</string>
+
+</resources>
