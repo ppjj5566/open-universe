@@ -2,13 +2,11 @@ package com.example.john.openmap.provider_shower;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -48,8 +46,6 @@ public class providers extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_information);
 
-        recyclerView = findViewById(R.id.recyclerView);
-
         SQLiteHandler db = new SQLiteHandler(getApplicationContext());
 
         HashMap<String, String> user = db.getUserDetails();
@@ -60,10 +56,15 @@ public class providers extends Activity {
 
         data_list = new data_list(data_from_servers);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        recyclerView = findViewById(R.id.recyclerView);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(data_list);
     }
 
     private void get_provider_state(final String id_) {
@@ -72,6 +73,7 @@ public class providers extends Activity {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d(TAG,"response : " + response);
                     JSONObject jsonObject = new JSONObject(response);
                     boolean error = jsonObject.getBoolean("error");
                     if (!error) {
@@ -80,16 +82,16 @@ public class providers extends Activity {
                         String tit = user.getString("title");
                         String ima = user.getString("image");
                         String sto = user.getString("story");
-
                         data_from_servers.clear();
                         Data_from_server story = new Data_from_server(null, ADRESS + tit_image, 1,null,null);
                         data_from_servers.add(story);
                         story = new Data_from_server(tit, null, 0,null,null);
                         data_from_servers.add(story);
-                        story = new Data_from_server(null, ADRESS + tit, 3,null,null);
+                        story = new Data_from_server(null, ADRESS + ima, 3,null,null);
                         data_from_servers.add(story);
                         story = new Data_from_server(sto, null, 2,null,null);
                         data_from_servers.add(story);
+                        recyclerView.setAdapter(data_list);
                     } else {
                         Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT);
                     }
@@ -118,8 +120,8 @@ public class providers extends Activity {
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_PICK);
         startActivityForResult(intent,PICK_IMAGE_REQUEST);
+        finish();
     }
-
 
     @Override
     public void onBackPressed() {

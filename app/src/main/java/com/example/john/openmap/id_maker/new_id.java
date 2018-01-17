@@ -41,7 +41,6 @@ public class new_id extends Activity implements OnMapReadyCallback{
     double loc_x;
     double loc_y;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,7 +61,6 @@ public class new_id extends Activity implements OnMapReadyCallback{
             }
         });
     }
-
 
     private void upload_location_to_server(final String id_, final double location_x, final double location_y){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, NEW_LOCATION, new Response.Listener<String>() {
@@ -122,11 +120,13 @@ public class new_id extends Activity implements OnMapReadyCallback{
     public void go_to_story_maker(){
         Intent intent = new Intent(new_id.this, providers.class);
         startActivity(intent);
+        finish();
     }
 
     public void go_to_main_activity(){
         Intent intent = new Intent(new_id.this, MainActivity.class);
         startActivity(intent);
+        finish();
     }
 
     final LatLng Sando = new LatLng(37.399452, 126.927704);

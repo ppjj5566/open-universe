@@ -39,21 +39,24 @@ public class at_visiter_view extends Activity{
 
     data_list data_list;
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Bundle extras = getIntent().getExtras();
+        assert extras != null;
+        get_provider_state(extras.getString("id"));
+        recyclerView = findViewById(R.id.recyclerView);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.provider_information);
-
-        recyclerView = findViewById(R.id.recyclerView);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        Bundle extras = getIntent().getExtras();
-
-        assert extras != null;
-        get_provider_state(extras.getString("id"));
     }
 
     // Here you can change the procedure of provider page add list

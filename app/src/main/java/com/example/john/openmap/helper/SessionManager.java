@@ -15,15 +15,17 @@ public class SessionManager {
 
     private Editor editor;
 
+    private int PRIVATE_MODE = 0;
+
     // Shared preferences file name
     private static final String PREF_NAME = "AndroidHiveLogin";
 
     private static final String KEY_IS_LOGGED_IN = "isLoggedIn";
 
     public SessionManager(Context context) {
-        int PRIVATE_MODE = 0;
+
         this.pref = context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
-        this.editor = pref.edit();
+        editor = pref.edit();
     }
 
     public void setLogin(boolean isLoggedIn) {

@@ -1,5 +1,14 @@
 package com.example.john.openmap.helper;
 
+import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
+import android.widget.ImageView;
+
+import java.io.InputStream;
+
 public class users_location_list {
 
     private Double location_x;
@@ -30,11 +39,13 @@ public class users_location_list {
         return title;
     }
 
-    public Double get_locaton_x(){
+    public Double get_location_x(){
         return location_x;
     }
 
     public Double get_location_y(){
         return location_y;
     }
+
+
 }

@@ -1,8 +1,10 @@
 package com.example.john.openmap.provider_shower;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,17 +16,13 @@ import android.widget.TextView;
 
 import com.example.john.openmap.R;
 import com.example.john.openmap.UIconnector.go_to_gallery;
-import com.example.john.openmap.UIconnector.tools;
+import com.example.john.openmap.log_out;
 import com.example.john.openmap.provider_editor.image_edit;
 import com.example.john.openmap.provider_editor.story_edit;
 import com.example.john.openmap.provider_editor.title_edit;
 import com.example.john.openmap.provider_editor.title_image_edit;
 
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class data_list extends RecyclerView.Adapter {
@@ -38,6 +36,8 @@ public class data_list extends RecyclerView.Adapter {
             super(itemView);
             this.ImageView = itemView.findViewById(R.id.imageView);
         }
+
+
     }
 
     public static class at_provider_Story_view extends RecyclerView.ViewHolder{
@@ -153,21 +153,7 @@ public class data_list extends RecyclerView.Adapter {
                     break;
 
                 case Data_from_server.TITLE_IMAGE:
-                    try {
-                        URL url = new URL(data_from_server.get_Image());
-                        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                        httpURLConnection.setDoInput(true);
-                        httpURLConnection.connect();
-                        InputStream inputStream = httpURLConnection.getInputStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        ((owners_info_window)holder).imageView.setImageBitmap(bitmap);
-                    }
-                    catch (MalformedURLException e) {
-                        Log.e("image read error",e.getMessage());
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    new DownloadImageFromInternet(((at_provider_Image_view)holder).ImageView).execute(data_from_server.get_Image());
                     ((at_provider_Image_view) holder).ImageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -189,20 +175,7 @@ public class data_list extends RecyclerView.Adapter {
                     break;
 
                 case Data_from_server.IMAGE:
-                    try {
-                        URL url = new URL(data_from_server.get_Image());
-                        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                        httpURLConnection.setDoInput(true);
-                        httpURLConnection.connect();
-                        InputStream inputStream = httpURLConnection.getInputStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        ((at_provider_Image_view) holder).ImageView.setImageBitmap(bitmap);
-                    }
-                    catch (Exception e) {
-                        Log.e("image read error",e.getMessage());
-                        e.printStackTrace();
-                    }
-
+                    new DownloadImageFromInternet(((at_provider_Image_view)holder).ImageView).execute(data_from_server.get_Image());
                     ((at_provider_Image_view) holder).ImageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -219,19 +192,7 @@ public class data_list extends RecyclerView.Adapter {
 
                 case Data_from_server.HEAD_INFO:
                     ((owners_info_window)holder).textView.setText(data_from_server.get_Story());
-                    try {
-                        URL url = new URL(data_from_server.get_Image());
-                        HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-                        httpURLConnection.setDoInput(true);
-                        httpURLConnection.connect();
-                        InputStream inputStream = httpURLConnection.getInputStream();
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-                        ((owners_info_window)holder).imageView.setImageBitmap(bitmap);
-                    }
-                    catch (Exception e) {
-                        Log.e("image read error",e.getMessage());
-                        e.printStackTrace();
-                    }
+                    new DownloadImageFromInternet(((owners_info_window)holder).imageView).execute(data_from_server.get_Image());
                     ((owners_info_window)holder).button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -245,8 +206,8 @@ public class data_list extends RecyclerView.Adapter {
                     ((logout)holder).logout.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            tools tools = new tools();
-                            tools.logoutUser();
+                            Intent intent = new Intent(v.getContext(), log_out.class);
+                            v.getContext().startActivity(intent);
                         }
                     });
             }
@@ -256,4 +217,31 @@ public class data_list extends RecyclerView.Adapter {
     public int getItemCount() {
         return data_from_servers.size();
     }
+
+    private static class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
+        @SuppressLint("StaticFieldLeak")
+        ImageView imageView;
+
+        DownloadImageFromInternet(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String imageURL = urls[0];
+            Bitmap bimage = null;
+            try {
+                InputStream in = new java.net.URL(imageURL).openStream();
+                bimage = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error Message", e.getMessage());
+                e.printStackTrace();
+            }
+            return bimage;
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            imageView.setImageBitmap(result);
+        }
+    }
+
 }

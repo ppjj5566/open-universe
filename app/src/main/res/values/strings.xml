@@ -26,5 +26,8 @@
     <string name="title_image">title image</string>
     <string name="image">image</string>
     <string name="log_out">Log out</string>
+    <string name="map">MAp</string>
+    <string name="owner_view">owner_view</string>
+    <string name="info">info</string>
 
 </resources>

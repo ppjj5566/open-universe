@@ -2,6 +2,7 @@ package com.example.john.openmap.UIconnector;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,13 +36,14 @@ import static com.example.john.openmap.app.AppConfig.SEND_PROVIDERS_INFORMATION;
 public class tools extends Activity{
 
     private SQLiteHandler db;
-    private SessionManager session;
 
     private static ArrayList<Data_from_server> data_from_servers = new ArrayList<>();
 
     data_list data_list;
 
     RecyclerView recyclerView;
+
+    private static String TAG = tools.class.getSimpleName();
 
     static String name;
     static String email;
@@ -54,7 +56,6 @@ public class tools extends Activity{
         recyclerView =findViewById(R.id.recyclerView);
 
         db = new SQLiteHandler(getApplicationContext());
-        session = new SessionManager(getApplicationContext());
 
         HashMap<String,String> user = db.getUserDetails();
 
@@ -75,7 +76,7 @@ public class tools extends Activity{
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(data_list);
+
     }
 
     void owner_information_request(final String id){
@@ -86,11 +87,13 @@ public class tools extends Activity{
                         JSONObject jsonObject = new JSONObject(response);
                         boolean error = jsonObject.getBoolean("error");
                     if(!error){
+                        Log.d(TAG,"response : " + response);
                         JSONObject user = jsonObject.getJSONObject("user");
                         String image = user.getString("image");
                         String title = user.getString("title");
                         Data_from_server data_from_server = new Data_from_server(title, ADRESS + image, 5, null, null);
                         data_from_servers.add(data_from_server);
+                        recyclerView.setAdapter(data_list);
                     }
                 }catch (Exception e){
                     Toast.makeText(getApplicationContext(),"Request error" + e.getMessage(),Toast.LENGTH_LONG).show();
@@ -112,15 +115,6 @@ public class tools extends Activity{
             }
         };
         AppController.getInstance().addToRequestQueue(stringRequest);
-    }
-
-    public void logoutUser() {
-        session.setLogin(false);
-        db.deleteUsers();
-        // Launching the login activity
-        Intent intent = new Intent(tools.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     @Override

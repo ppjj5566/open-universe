@@ -116,10 +116,12 @@
         <activity android:name=".provider_shower.providers"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
-        <activity android:name=".UIconnector.go_to_gallery"
-            tools:ignore="InnerclassSeparator" />
-        <activity android:name=".UIconnector.go_to_title_editer"
-            tools:ignore="InnerclassSeparator" />
+        <activity android:name=".UIconnector.go_to_gallery" />
+
+        <activity android:name=".log_out"/>
+
+
+        <activity android:name=".UIconnector.go_to_title_editer" />
 
     </application>
 
