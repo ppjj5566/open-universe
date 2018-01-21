@@ -45,8 +45,9 @@ public class MainActivity extends Activity implements OnMapReadyCallback{
     private static final String TAG = MainActivity.class.getSimpleName();
     private SQLiteHandler db;
     private SessionManager session;
-    info_window info_window = new info_window(MainActivity.this);
+    private info_window info_window = new info_window(MainActivity.this);
     users_location_list users_location_list;
+    GoogleMap googleMap;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -144,10 +145,10 @@ public class MainActivity extends Activity implements OnMapReadyCallback{
         AppController.getInstance().addToRequestQueue(stringRequest,tag_string_req);
     }
 
-
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        this.googleMap = googleMap;
         final JsonArrayRequest stringRequest = new JsonArrayRequest(USERS_LOCATION, new Response.Listener<JSONArray>() {
             @Override
             public void onResponse(JSONArray response) {
@@ -160,9 +161,8 @@ public class MainActivity extends Activity implements OnMapReadyCallback{
                         String id = json.getString("id");
                         String string_image = json.getString("head_image");
                         String title = json.getString("heed_title");
-                        String image = ADRESS + string_image;
                         LatLng latLng = new LatLng(location_x, location_y);
-                        users_location_list = new users_location_list(location_x,location_y,id,image,title);
+                        users_location_list = new users_location_list(id,ADRESS + string_image,title);
                         MarkerOptions markerOptions = new MarkerOptions().position(latLng);
                         googleMap.setInfoWindowAdapter(info_window);
                         googleMap.setOnInfoWindowClickListener(info_window);
@@ -185,21 +185,25 @@ public class MainActivity extends Activity implements OnMapReadyCallback{
     }
 
     private void go_to_new_id(){
+        googleMap.clear();
         Intent intent = new Intent(MainActivity.this, new_id.class);
         startActivity(intent);
     }
 
     private void go_to_information(){
+        googleMap.clear();
         Intent intent = new Intent(MainActivity.this, tools.class);
         startActivity(intent);
     }
 
     private void provider_page(){
+        googleMap.clear();
         Intent intent = new Intent(MainActivity.this, providers.class);
         startActivity(intent);
     }
 
     private void logoutUser() {
+        googleMap.clear();
         session.setLogin(false);
         db.deleteUsers();
         // Launching the login activity

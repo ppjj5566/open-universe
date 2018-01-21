@@ -37,7 +37,6 @@ public class data_list extends RecyclerView.Adapter {
             this.ImageView = itemView.findViewById(R.id.imageView);
         }
 
-
     }
 
     public static class at_provider_Story_view extends RecyclerView.ViewHolder{
