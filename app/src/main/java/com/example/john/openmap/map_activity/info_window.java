@@ -25,7 +25,7 @@ public class info_window implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInf
     private Activity context;
     private users_location_list object;
 
-    info_window(Activity context){
+     info_window(Activity context){
         this.context = context;
     }
 
