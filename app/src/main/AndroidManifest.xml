@@ -58,7 +58,6 @@
             </intent-filter>
         </activity>
 
-
         <activity
             android:name=".activity.RegisterActivity"
             android:label="@string/app_name"
@@ -67,16 +66,7 @@
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
             />
 
-        <activity android:name=".UIconnector.tools"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustPan"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
-            tools:ignore="InnerclassSeparator" />
-
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
+        <activity android:name=".tab_layout"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
@@ -113,12 +103,10 @@
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustPan"/>
 
-        <activity android:name=".provider_shower.providers"
-            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
 
         <activity android:name=".UIconnector.go_to_gallery" />
 
-        <activity android:name=".log_out"/>
+        <activity android:name=".map_activity.log_out"/>
 
 
         <activity android:name=".UIconnector.go_to_title_editer" />

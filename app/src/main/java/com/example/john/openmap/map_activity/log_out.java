@@ -1,4 +1,4 @@
-package com.example.john.openmap;
+package com.example.john.openmap.map_activity;
 
 import android.app.Activity;
 import android.content.Intent;

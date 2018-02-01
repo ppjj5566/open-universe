@@ -14,12 +14,13 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.john.openmap.MainActivity;
+import com.example.john.openmap.map_activity.MainActivity;
 import com.example.john.openmap.R;
 import com.example.john.openmap.app.AppConfig;
 import com.example.john.openmap.app.AppController;
 import com.example.john.openmap.helper.SQLiteHandler;
 import com.example.john.openmap.helper.SessionManager;
+import com.example.john.openmap.tab_layout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,7 +59,7 @@ public class LoginActivity extends Activity {
         // Check if user is already logged in or not
         if (session.isLoggedIn()) {
             // User is already logged in. Take him to main activity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, tab_layout.class);
             startActivity(intent);
             finish();
         }

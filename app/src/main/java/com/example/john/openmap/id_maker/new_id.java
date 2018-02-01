@@ -14,7 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.john.openmap.MainActivity;
+import com.example.john.openmap.map_activity.MainActivity;
 import com.example.john.openmap.R;
 import com.example.john.openmap.app.AppController;
 import com.example.john.openmap.helper.SQLiteHandler;
@@ -110,7 +110,6 @@ public class new_id extends Activity implements OnMapReadyCallback{
         };
         AppController.getInstance().addToRequestQueue(stringRequest);
     }
-
 
     @Override
     public void onBackPressed() {

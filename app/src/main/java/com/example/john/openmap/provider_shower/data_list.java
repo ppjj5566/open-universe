@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.example.john.openmap.R;
 import com.example.john.openmap.UIconnector.go_to_gallery;
-import com.example.john.openmap.log_out;
+import com.example.john.openmap.map_activity.log_out;
 import com.example.john.openmap.provider_editor.image_edit;
 import com.example.john.openmap.provider_editor.story_edit;
 import com.example.john.openmap.provider_editor.title_edit;

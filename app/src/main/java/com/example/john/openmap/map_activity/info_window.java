@@ -1,13 +1,15 @@
-package com.example.john.openmap;
+package com.example.john.openmap.map_activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.john.openmap.R;
 import com.example.john.openmap.helper.users_location_list;
 import com.example.john.openmap.visiter_viewer.at_visiter_view;
 import com.google.android.gms.maps.GoogleMap;

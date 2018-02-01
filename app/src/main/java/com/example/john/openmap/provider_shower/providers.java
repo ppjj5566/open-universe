@@ -1,19 +1,23 @@
 package com.example.john.openmap.provider_shower;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.annotation.SuppressLint;
+import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.john.openmap.MainActivity;
 import com.example.john.openmap.R;
 import com.example.john.openmap.app.AppController;
 import com.example.john.openmap.helper.SQLiteHandler;
@@ -28,25 +32,37 @@ import java.util.Map;
 import static com.example.john.openmap.app.AppConfig.ADRESS;
 import static com.example.john.openmap.app.AppConfig.PROVIDER_MAIN;
 
-public class providers extends Activity {
+@SuppressLint("ValidFragment")
+public class providers extends Fragment {
     private static final String TAG = providers.class.getSimpleName();
 
     private static ArrayList<Data_from_server> data_from_servers = new ArrayList<>();
-    int image_code;
 
     data_list data_list;
 
     RecyclerView recyclerView;
 
     String id;
-    public int PICK_IMAGE_REQUEST = 1;
+
+    Context context;
+
+    @SuppressLint("ValidFragment")
+    public providers(Context context){
+        this.context = context;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.provider_information);
+    }
 
-        SQLiteHandler db = new SQLiteHandler(getApplicationContext());
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        View v = inflater.inflate(R.layout.provider_information,container,false);
+
+        SQLiteHandler db = new SQLiteHandler(context.getApplicationContext());
 
         HashMap<String, String> user = db.getUserDetails();
 
@@ -55,16 +71,12 @@ public class providers extends Activity {
         get_provider_state(id);
 
         data_list = new data_list(data_from_servers);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        recyclerView = findViewById(R.id.recyclerView);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView = v.findViewById(R.id.recyclerView);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context.getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        return v;
+
     }
 
     private void get_provider_state(final String id_) {
@@ -93,15 +105,15 @@ public class providers extends Activity {
                         data_from_servers.add(story);
                         recyclerView.setAdapter(data_list);
                     } else {
-                        Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT);
+                        Toast.makeText(context.getApplicationContext(), "error", Toast.LENGTH_SHORT);
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(getApplication(), e.getMessage(), Toast.LENGTH_LONG);
+                    Toast.makeText(context.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG);
                 }
             }
         }, new Response.ErrorListener() {
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getApplicationContext(),
+                Toast.makeText(context.getApplicationContext(),
                         error.getMessage(), Toast.LENGTH_LONG).show();
             }
         }) {
@@ -113,20 +125,5 @@ public class providers extends Activity {
             }
         };
         AppController.getInstance().addToRequestQueue(stringRequest);
-    }
-
-    public void image_is_chused(int location, Intent intent){
-        image_code = location;
-        intent.setType("image/*");
-        intent.setAction(Intent.ACTION_PICK);
-        startActivityForResult(intent,PICK_IMAGE_REQUEST);
-        finish();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(providers.this, MainActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
