@@ -1,7 +1,6 @@
 package com.example.john.openmap.map_activity;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,9 +12,9 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.john.openmap.R;
 import com.example.john.openmap.app.AppController;
 import com.example.john.openmap.helper.users_location_list;
-import com.example.john.openmap.tab_layout;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -25,6 +24,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.zip.Inflater;
 
 import static com.example.john.openmap.app.AppConfig.ADRESS;
 import static com.example.john.openmap.app.AppConfig.USERS_LOCATION;
@@ -37,7 +38,6 @@ public class MainActivity extends SupportMapFragment implements OnMapReadyCallba
     users_location_list users_location_list;
     GoogleMap googleMap;
     Context context;
-    tab_layout tab_layout;
 
     @SuppressLint("ValidFragment")
     public MainActivity(Context context){
@@ -68,7 +68,6 @@ public class MainActivity extends SupportMapFragment implements OnMapReadyCallba
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
                 try {
-                    new info_window(getActivity());
                     for(int i = 0; i < response.length(); i++) {
                         JSONObject json = (JSONObject)response.get(i);
                         Double location_x = json.getDouble("location_x");
@@ -86,7 +85,7 @@ public class MainActivity extends SupportMapFragment implements OnMapReadyCallba
                         marker.showInfoWindow();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getContext().getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("MainActivity :", e.getMessage());
                 }
             }
