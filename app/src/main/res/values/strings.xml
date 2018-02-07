@@ -29,5 +29,6 @@
     <string name="map">MAp</string>
     <string name="owner_view">owner_view</string>
     <string name="info">info</string>
+    <string name="open_universe">name</string>
 
 </resources>

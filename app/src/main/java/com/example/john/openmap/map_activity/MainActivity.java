@@ -1,6 +1,8 @@
 package com.example.john.openmap.map_activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,34 +27,40 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.zip.Inflater;
-
 import static com.example.john.openmap.app.AppConfig.ADRESS;
 import static com.example.john.openmap.app.AppConfig.USERS_LOCATION;
 
 @SuppressLint("ValidFragment")
-public class MainActivity extends SupportMapFragment implements OnMapReadyCallback{
+public class MainActivity extends Fragment implements OnMapReadyCallback{
 
     private static final String TAG = MainActivity.class.getSimpleName();
-    com.example.john.openmap.map_activity.info_window info_window;
     users_location_list users_location_list;
     GoogleMap googleMap;
     Context context;
+    Activity activity;
+    SupportMapFragment mapView;
+    info_window info_window;
+    View v;
 
     @SuppressLint("ValidFragment")
-    public MainActivity(Context context){
+    public MainActivity(Context context,Activity activity){
         this.context = context;
+        this.activity = activity;
     }
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup viewGroup, Bundle bundle) {
-        return super.onCreateView(layoutInflater, viewGroup, bundle);
+        v = layoutInflater.inflate(R.layout.main_activity,viewGroup,false);
+        mapView = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
+        mapView.getMapAsync(this);
+        mapView.getActivity();
+        info_window = new info_window(mapView.getActivity(),mapView.getContext());
+        return v;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getMapAsync(this);
     }
 
     /**

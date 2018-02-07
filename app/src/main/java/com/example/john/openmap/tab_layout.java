@@ -1,11 +1,12 @@
 package com.example.john.openmap;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
+    import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import com.example.john.openmap.UIconnector.tools;
 import com.example.john.openmap.helper.SessionManager;
 import com.example.john.openmap.map_activity.MainActivity;
+import com.example.john.openmap.map_activity.info_window;
 import com.example.john.openmap.map_activity.log_out;
 import com.example.john.openmap.provider_shower.providers;
 
@@ -31,6 +33,7 @@ public class tab_layout extends AppCompatActivity{
     SessionManager session;
     ViewPager viewPager;
     Pager pagerAdapter;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +44,7 @@ public class tab_layout extends AppCompatActivity{
         }
 
         viewPager = findViewById(R.id.viewpager);
-        pagerAdapter = new Pager(getSupportFragmentManager(),tab_layout.this);
+        pagerAdapter = new Pager(getSupportFragmentManager(),this.getApplicationContext());
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -89,7 +92,7 @@ public class tab_layout extends AppCompatActivity{
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return new MainActivity(context);
+                    return new MainActivity(context,getParent());
                 case 1:
                     return new providers(context);
                 case 2:

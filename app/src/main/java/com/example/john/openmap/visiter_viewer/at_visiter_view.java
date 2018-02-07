@@ -53,8 +53,6 @@ public class at_visiter_view extends Activity{
         assert extras != null;
         get_provider_state(extras.getString("id"));
         recyclerView = findViewById(R.id.recyclerView);
-
-
     }
 
     // Here you can change the procedure of provider page add list

@@ -16,23 +16,28 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
 import com.squareup.picasso.Picasso;
 
+import java.util.zip.Inflater;
+
 /**
  * Created by ppjj5 on 2018-01-17.
  * it's can show users title and title_image!
  */
 
 public class info_window implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInfoWindowClickListener {
-    private Activity context;
+    private Activity activity;
+    private Context context;
     private users_location_list object;
+    Inflater inflater;
 
-     info_window(Activity context){
+     info_window(Activity activity,Context context){
+        this.activity = activity;
         this.context = context;
     }
 
     @Override
     public View getInfoWindow(Marker marker) {
-        @SuppressLint("InflateParams")
-        View v = context.getLayoutInflater().inflate(R.layout.marker_view,null);
+         @SuppressLint("InflateParams")
+        View v = activity.getLayoutInflater().inflate(R.layout.marker_view,null);
         ImageView imageView = v.findViewById(R.id.title_image_view);
         TextView textView = v.findViewById(R.id.title_view);
         object = (users_location_list) marker.getTag();
