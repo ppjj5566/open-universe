@@ -8,9 +8,6 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.util.Base64;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -18,7 +15,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.example.john.openmap.R;
 import com.example.john.openmap.app.AppController;
 import com.example.john.openmap.helper.SQLiteHandler;
 import com.example.john.openmap.provider_shower.providers;
@@ -40,36 +36,20 @@ import static com.example.john.openmap.app.AppConfig.UPLOAD_IMAGE;
 
 public class image_edit extends Activity{
 
-    ImageView imageview;
-    Button done;
-
     private String image;
     String id;
+    int sequence;
     int PICK_IMAGE_REQUEST = 1;
+    Intent intent = getIntent();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setContentView(R.layout.image_editor);
         super.onCreate(savedInstanceState);
-        imageview = findViewById(R.id.imageView);
-        done = findViewById(R.id.done);
-
-        imageview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SQLiteHandler db = new SQLiteHandler(getApplicationContext());
-                HashMap<String, String> user = db.getUserDetails();
-                id = user.get("email");
-                image_is_chused();
-            }
-        });
-
-        done.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                upload_image(id,image);
-            }
-        });
+        SQLiteHandler db = new SQLiteHandler(getApplicationContext());
+        HashMap<String, String> user = db.getUserDetails();
+        id = user.get("email");
+        sequence = intent.getIntExtra("amp_number",1);
+        image_is_chused();
     }
 
     private void image_is_chused(){
@@ -89,8 +69,8 @@ public class image_edit extends Activity{
             try {
                 //Getting the Bitmap from Gallery
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageview.setImageBitmap(bitmap);
                 image = getStringImage(bitmap);
+                upload_image(id,image,sequence);
             } catch (IOException e) {
                 Toast.makeText(getApplicationContext(), "Failed to get image", Toast.LENGTH_LONG).show();
             }
@@ -98,7 +78,7 @@ public class image_edit extends Activity{
     }
 
 
-    public void upload_image(final String id, final String title_Image){
+    public void upload_image(final String id, final String title_Image, final int list_number){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, UPLOAD_IMAGE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -130,6 +110,7 @@ public class image_edit extends Activity{
                 params.put("id",id);
                 params.put("title_image",title_Image);
                 params.put("number", String.valueOf(2));
+                params.put("list_number",String.valueOf(list_number));
                 return params;
             }
         };
@@ -140,8 +121,8 @@ public class image_edit extends Activity{
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
+        String encoded_Image = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encoded_Image;
     }
 
     private void go_to_provider(){

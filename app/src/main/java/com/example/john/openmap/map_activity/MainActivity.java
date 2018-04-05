@@ -27,6 +27,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.Map;
+
 import static com.example.john.openmap.app.AppConfig.ADRESS;
 import static com.example.john.openmap.app.AppConfig.USERS_LOCATION;
 
@@ -76,22 +78,22 @@ public class MainActivity extends Fragment implements OnMapReadyCallback{
             public void onResponse(JSONArray response) {
                 Log.d(TAG, response.toString());
                 try {
-                    for(int i = 0; i < response.length(); i++) {
-                        JSONObject json = (JSONObject)response.get(i);
-                        Double location_x = json.getDouble("location_x");
-                        Double location_y = json.getDouble("location_y");
-                        String id = json.getString("id");
-                        String string_image = json.getString("head_image");
-                        String title = json.getString("heed_title");
-                        LatLng latLng = new LatLng(location_x, location_y);
-                        users_location_list = new users_location_list(id,ADRESS + string_image,title);
-                        MarkerOptions markerOptions = new MarkerOptions().position(latLng);
-                        googleMap.setInfoWindowAdapter(info_window);
-                        googleMap.setOnInfoWindowClickListener(info_window);
-                        Marker marker = googleMap.addMarker(markerOptions);
-                        marker.setTag(users_location_list);
-                        marker.showInfoWindow();
-                    }
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject json = (JSONObject) response.get(i);
+                            Double location_x = json.getDouble("location_x");
+                            Double location_y = json.getDouble("location_y");
+                            String id = json.getString("id");
+                            String string_image = json.getString("head_image");
+                            String title = json.getString("heed_title");
+                            LatLng latLng = new LatLng(location_x, location_y);
+                            users_location_list = new users_location_list(id, ADRESS + string_image, title);
+                            MarkerOptions markerOptions = new MarkerOptions().position(latLng);
+                            googleMap.setInfoWindowAdapter(info_window);
+                            googleMap.setOnInfoWindowClickListener(info_window);
+                            Marker marker = googleMap.addMarker(markerOptions);
+                            marker.setTag(users_location_list);
+                            marker.showInfoWindow();
+                        }
                 } catch (Exception e) {
                     Toast.makeText(context.getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
                     Log.e("MainActivity :", e.getMessage());

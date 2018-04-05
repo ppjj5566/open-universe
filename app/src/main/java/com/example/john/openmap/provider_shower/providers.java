@@ -89,7 +89,7 @@ public class providers extends Fragment {
                     JSONObject jsonObject = new JSONObject(response);
                     boolean error = jsonObject.getBoolean("error");
                     if (!error) {
-                        JSONObject user = jsonObject.getJSONObject("user");
+                        JSONObject user = jsonObject.getJSONObject(" ");
                         String tit_image = user.getString("title_image");
                         String tit = user.getString("title");
                         String ima = user.getString("image");
@@ -102,6 +102,8 @@ public class providers extends Fragment {
                         story = new Data_from_server(null, ADRESS + ima, 3,null,null);
                         data_from_servers.add(story);
                         story = new Data_from_server(sto, null, 2,null,null);
+                        data_from_servers.add(story);
+                        story = new Data_from_server(null,null,7,null,null);
                         data_from_servers.add(story);
                         recyclerView.setAdapter(data_list);
                     } else {

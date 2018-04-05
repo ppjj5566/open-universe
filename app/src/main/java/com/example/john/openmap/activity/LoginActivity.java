@@ -136,7 +136,7 @@ public class LoginActivity extends Activity {
                         db.addUser(name, email, uid, created_at);
 
                         // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, tab_layout.class);
                         startActivity(intent);
                         finish();
                     }

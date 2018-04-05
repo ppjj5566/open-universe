@@ -16,6 +16,7 @@ public class Data_from_server {
     static final int OWNER_INFO = 4;
     static final int HEAD_INFO = 5;
     static final int LOG_OUT = 6;
+    static final int AMP = 7;
 
     public Data_from_server(){
     }

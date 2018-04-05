@@ -2,7 +2,7 @@ package com.example.john.openmap.app;
 
 public class AppConfig {
     // Server user login url
-    private static String IP_ADDRESS = "192.168.35.14";
+    private static String IP_ADDRESS = "192.168.35.35";
 
     public static String URL_LOGIN = "http://"+IP_ADDRESS+"/android_login_api/login.php";
 
@@ -26,4 +26,6 @@ public class AppConfig {
     public static String SEND_PROVIDERS_INFORMATION = "http://"+IP_ADDRESS+"/android_login_api/send_Provider_Head_Information.php";
 
     public static String ADRESS = "http://"+IP_ADDRESS+"/android_login_api/";
+
+    public static String USERS_STORY = "http://"+IP_ADDRESS+"/android_login_api/providers_work_shop.php";
 }

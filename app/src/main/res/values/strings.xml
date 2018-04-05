@@ -30,5 +30,6 @@
     <string name="owner_view">owner_view</string>
     <string name="info">info</string>
     <string name="open_universe">name</string>
+    <string name="sentence">Sentence</string>
 
 </resources>

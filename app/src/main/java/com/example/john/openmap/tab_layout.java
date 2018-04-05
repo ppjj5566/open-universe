@@ -1,12 +1,11 @@
 package com.example.john.openmap;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
-    import android.support.v4.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,10 +18,9 @@ import android.widget.TextView;
 import com.example.john.openmap.UIconnector.tools;
 import com.example.john.openmap.helper.SessionManager;
 import com.example.john.openmap.map_activity.MainActivity;
-import com.example.john.openmap.map_activity.info_window;
 import com.example.john.openmap.map_activity.log_out;
 import com.example.john.openmap.provider_shower.providers;
-
+import com.example.john.openmap.provider_shower.work_shop;
 
 /**
  * Created by ppjj5 on 2018-01-22.
@@ -44,7 +42,7 @@ public class tab_layout extends AppCompatActivity{
         }
 
         viewPager = findViewById(R.id.viewpager);
-        pagerAdapter = new Pager(getSupportFragmentManager(),this.getApplicationContext());
+        pagerAdapter = new Pager(getSupportFragmentManager(), this.getApplicationContext());
         viewPager.setAdapter(pagerAdapter);
 
         TabLayout tabLayout = findViewById(R.id.tabs);
@@ -63,11 +61,9 @@ public class tab_layout extends AppCompatActivity{
         finish();
     }
 
-
-
     public class Pager extends FragmentPagerAdapter{
 
-        String names[] = {"universe","own info","info"};
+        String names[] = {"universe","owner info","info"};
         Fragment[] fragments = new Fragment[names.length];
         Context context;
 
@@ -94,13 +90,12 @@ public class tab_layout extends AppCompatActivity{
                 case 0:
                     return new MainActivity(context,getParent());
                 case 1:
-                    return new providers(context);
+                    return new work_shop(context);
                 case 2:
                     return new tools(context);
             }
             return null;
         }
-
 
         @Override
         public int getCount() {
@@ -114,5 +109,4 @@ public class tab_layout extends AppCompatActivity{
             return createdFragment;
         }
     }
-
 }

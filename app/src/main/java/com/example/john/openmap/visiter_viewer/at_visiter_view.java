@@ -26,6 +26,7 @@ import java.util.Map;
 
 import static com.example.john.openmap.app.AppConfig.ADRESS;
 import static com.example.john.openmap.app.AppConfig.PROVIDER_MAIN;
+import static com.example.john.openmap.app.AppConfig.USERS_STORY;
 
 // provider pages recycler_view add list
 
@@ -59,7 +60,7 @@ public class at_visiter_view extends Activity{
 
     private void get_provider_state(final String id_) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, PROVIDER_MAIN, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, USERS_STORY, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{

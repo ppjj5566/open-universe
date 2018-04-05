@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.john.openmap.R;
 import com.example.john.openmap.helper.users_location_list;
+import com.example.john.openmap.provider_shower.work_shop;
 import com.example.john.openmap.visiter_viewer.at_visiter_view;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
@@ -59,14 +60,14 @@ public class info_window implements GoogleMap.InfoWindowAdapter, GoogleMap.OnInf
     }
 
     @Override
-    public void onInfoWindowClick(Marker marker)
-
-    {
+    public void onInfoWindowClick(Marker marker) {
         at_users_view(object.get_id());
+        Intent intent = new Intent(activity,work_shop.class);
+        context.startActivity(intent);
     }
 
     private void at_users_view(String id){
-        Intent intent = new Intent(context.getApplicationContext(), at_visiter_view.class);
+        Intent intent = new Intent(activity, at_visiter_view.class);
         intent.putExtra("id", id);
         context.startActivity(intent);
     }
